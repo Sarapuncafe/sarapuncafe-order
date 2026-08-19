@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>สาระพัน Cafe — หน้าจอเคาน์เตอร์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF8F2;
+    --cream-deep: #F1EDE2;
+    --ink: #3B3B32;
+    --ink-soft: #83816F;
+    --olive: #606D47;
+    --olive-deep: #4B5638;
+    --leaf: #A7C285;
+    --line: rgba(59,59,50,0.13);
+    --disabled: #C9C6BA;
+    --amber: #C98A3A;
+    --green-ok: #4B7A4E;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--cream-deep); color: var(--ink); font-family: 'Noto Sans Thai', sans-serif; font-weight: 300;
+    min-height: 100vh; -webkit-overflow-scrolling: touch; }
+
+  /* ---------- HEADER ---------- */
+  header { position: sticky; top: 0; z-index: 10; background: var(--olive); color: var(--cream);
+    padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    box-shadow: 0 3px 14px rgba(75,86,56,0.25); }
+  .hdr-left { display: flex; align-items: center; gap: 12px; }
+  .hdr-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.02em; }
+  .hdr-sub { font-size: 11.5px; opacity: 0.82; margin-top: 2px; }
+  .status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--leaf); display: inline-block;
+    box-shadow: 0 0 0 rgba(167,194,133,0.6); animation: pulseDot 2s infinite; }
+  .status-dot.error { background: #D9714E; animation: none; }
+  @keyframes pulseDot { 0% { box-shadow: 0 0 0 0 rgba(167,194,133,0.55);} 70% { box-shadow: 0 0 0 7px rgba(167,194,133,0);} 100% { box-shadow: 0 0 0 0 rgba(167,194,133,0);} }
+  .hdr-right { display: flex; align-items: center; gap: 8px; }
+  .icon-btn { width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(250,248,242,0.16);
+    color: var(--cream); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s ease; }
+  .icon-btn:active { background: rgba(250,248,242,0.3); }
+  .count-pill { background: rgba(250,248,242,0.16); border-radius: 100px; padding: 8px 14px; font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; }
+  .updated-label { font-size: 10.5px; opacity: 0.75; margin-top: 2px; text-align: right; }
+
+  /* ---------- DATE NAV ---------- */
+  .date-nav { background: var(--cream); border-bottom: 1px solid var(--line); padding: 10px 20px;
+    display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .date-nav-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line); background: var(--cream-deep);
+    color: var(--olive-deep); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .date-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .date-nav-label { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 14px; min-width: 170px; text-align: center; }
+  .date-nav-today { font-size: 11px; color: var(--olive-deep); border: 1px solid var(--olive); border-radius: 100px;
+    padding: 5px 12px; background: transparent; cursor: pointer; }
+  .date-nav-today.hide { visibility: hidden; }
+  .live-pill { font-size: 10.5px; color: var(--green-ok); background: rgba(75,122,78,0.12); border-radius: 100px;
+    padding: 4px 10px; margin-left: 4px; }
+
+  .setup-banner { background: var(--cream); border-bottom: 1px solid var(--line); }
+  .setup-toggle { padding: 10px 20px; font-size: 12.5px; color: var(--olive-deep); cursor: pointer; display: flex;
+    align-items: center; gap: 6px; user-select: none; }
+  .setup-body { padding: 0 20px 16px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.9; display: none; }
+  .setup-body.show { display: block; }
+  .setup-body b { color: var(--ink); }
+  .setup-body a { color: var(--olive-deep); }
+
+  .error-banner { background: #F6E4DC; color: #96432A; padding: 10px 20px; font-size: 12.5px; display: none;
+    align-items: center; justify-content: space-between; gap: 10px; }
+  .error-banner.show { display: flex; }
+  .error-banner button { background: #96432A; color: #fff; border: none; border-radius: 100px; padding: 6px 14px;
+    font-size: 11.5px; cursor: pointer; }
+
+  .alert-banner { background: var(--amber); color: #fff; padding: 12px 20px; font-size: 13.5px; display: none;
+    align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15); }
+  .alert-banner.show { display: flex; animation: alertBarPulse 1.1s ease-in-out infinite; }
+  @keyframes alertBarPulse { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.12); } }
+  .alert-banner .txt { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+  .alert-banner .bell { font-size: 17px; animation: bellShake 0.8s ease-in-out infinite; }
+  @keyframes bellShake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-12deg); } 75% { transform: rotate(12deg); } }
+
+  main { padding: 20px; max-width: 1400px; margin: 0 auto; }
+  .empty-state { text-align: center; padding: 90px 20px; color: var(--ink-soft); }
+  .empty-state .emoji { font-size: 40px; margin-bottom: 10px; }
+
+  .order-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+  .order-card { background: var(--cream); border-radius: 18px; box-shadow: 0 2px 12px rgba(59,59,50,0.09);
+    padding: 16px 18px 14px; border: 1px solid transparent; }
+  .order-card.pending { border-color: rgba(201,138,58,0.55); box-shadow: 0 2px 14px rgba(201,138,58,0.22); }
+  .order-card.is-new { animation: newGlow 2.4s ease-out; }
+  @keyframes newGlow {
+    0% { box-shadow: 0 0 0 3px rgba(201,138,58,0.55), 0 2px 12px rgba(59,59,50,0.09); }
+    100% { box-shadow: 0 2px 12px rgba(59,59,50,0.09); }
+  }
+  .order-card.printed { opacity: 0.72; }
+
+  .oc-top { display: flex; align-items: baseline; justify-content: space-between; }
+  .oc-queue { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 26px; color: var(--olive-deep); }
+  .oc-time { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--ink-soft); }
+
+  .oc-customer { margin-top: 6px; }
+  .oc-name { font-size: 14.5px; font-weight: 500; }
+  .oc-meta-row { font-size: 12px; color: var(--ink-soft); margin-top: 1px; }
+
+  .oc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag { font-size: 10.5px; padding: 4px 10px; border-radius: 100px; background: var(--cream-deep); color: var(--ink-soft);
+    border: 1px solid var(--line); }
+  .tag.discount { background: rgba(201,138,58,0.14); color: var(--amber); border-color: rgba(201,138,58,0.35); }
+  .tag.pay { background: rgba(96,109,71,0.12); color: var(--olive-deep); border-color: rgba(96,109,71,0.28); }
+  .tag.accepted { background: rgba(75,122,78,0.14); color: var(--green-ok); border-color: rgba(75,122,78,0.35); }
+
+  .oc-divider { border-top: 1px dashed var(--line); margin: 12px 0; }
+
+  .oc-item { display: flex; justify-content: space-between; gap: 10px; font-size: 13.5px; padding: 3px 0; }
+  .oc-item .name { flex: 1; }
+  .oc-item .meta { display: block; font-size: 11px; color: var(--ink-soft); }
+  .oc-item .price { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: nowrap; }
+
+  .oc-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 10px; }
+  .oc-total .label { font-size: 12.5px; color: var(--ink-soft); }
+  .oc-total .value { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 17px; color: var(--olive-deep); }
+
+  .oc-actions { display: flex; gap: 8px; margin-top: 14px; }
+  .btn-print { flex: 1; background: var(--olive); color: var(--cream); border: none; border-radius: 100px;
+    padding: 12px 14px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer;
+    box-shadow: 0 6px 14px rgba(75,86,56,0.25); }
+  .btn-print:active { transform: scale(0.97); }
+  .btn-print.done { background: var(--disabled); box-shadow: none; color: var(--ink); }
+  .btn-ghost { background: transparent; border: 1px solid var(--line); color: var(--ink-soft); border-radius: 100px;
+    padding: 12px 14px; font-size: 12px; cursor: pointer; }
+  .btn-accept { flex: 1; background: var(--amber); color: #fff; border: none; border-radius: 100px;
+    padding: 14px 14px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer;
+    box-shadow: 0 6px 14px rgba(201,138,58,0.35); }
+  .btn-accept:active { transform: scale(0.97); }
+
+  /* ---------- PREVIEW / TOAST ---------- */
+  .overlay { position: fixed; inset: 0; background: rgba(59,59,50,0.55); display: flex; align-items: center;
+    justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 50; padding: 20px; }
+  .overlay.show { opacity: 1; pointer-events: auto; }
+  .preview-box { width: 100%; max-width: 340px; max-height: 88vh; overflow-y: auto; background: #fff; border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+  .preview-actions { display: flex; gap: 8px; padding: 12px; background: var(--cream); border-radius: 0 0 10px 10px; }
+  .preview-actions button { flex: 1; border-radius: 100px; border: none; padding: 12px; font-size: 13px; cursor: pointer;
+    font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; }
+  .preview-actions .close { background: var(--cream-deep); color: var(--ink); }
+  .preview-actions .go { background: var(--olive); color: var(--cream); }
+
+  .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px); background: var(--ink);
+    color: var(--cream); padding: 13px 20px; border-radius: 12px; font-size: 12.5px; max-width: 90%; text-align: center;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.3); z-index: 60; opacity: 0; pointer-events: none; transition: all 0.25s ease; line-height: 1.6; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ---------- RECEIPT (shared look for preview + fallback print) ---------- */
+  .receipt { font-family: 'JetBrains Mono', 'Courier New', monospace; color: #000; padding: 16px 14px; font-size: 12.5px; }
+  .receipt .r-center { text-align: center; }
+  .receipt .r-shop { font-size: 17px; font-weight: 700; font-family: 'Baloo Thambi 2', sans-serif; }
+  .receipt .r-sub { font-size: 11px; margin-bottom: 8px; color: #333; }
+  .receipt .r-queue { font-size: 30px; font-weight: 700; margin-top: 4px; }
+  .receipt .r-queue-label { font-size: 10.5px; color: #333; margin-bottom: 8px; }
+  .receipt .r-divider { border-top: 1px dashed #000; margin: 8px 0; }
+  .receipt .r-row { display: flex; justify-content: space-between; gap: 8px; font-size: 11.5px; margin: 2px 0; }
+  .receipt .r-item-row { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; margin-top: 4px; }
+  .receipt .r-item-meta { font-size: 11px; color: #333; margin: 0 0 2px 12px; }
+  .receipt .r-total-row { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; margin-top: 4px; }
+  .receipt .r-footer { font-size: 10px; text-align: center; margin-top: 10px; color: #444; }
+
+  #printArea { display: none; }
+  @media print {
+    body * { visibility: hidden; }
+    #printArea, #printArea * { visibility: visible; }
+    #printArea { display: block; position: absolute; top: 0; left: 0; width: 80mm; }
+    @page { size: 80mm auto; margin: 2mm; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-left">
+    <span class="status-dot" id="statusDot"></span>
+    <div>
+      <div class="hdr-title">สาระพัน Cafe · หน้าจอเคาน์เตอร์</div>
+      <div class="hdr-sub" id="updatedLabel">กำลังโหลดออเดอร์...</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="count-pill" id="countPill">0 ออเดอร์</div>
+    <button class="icon-btn" id="soundBtn" title="เปิด/ปิดเสียงแจ้งเตือน" onclick="toggleSound()">🔊</button>
+    <button class="icon-btn" title="รีเฟรชตอนนี้" onclick="poll(true)">🔄</button>
+  </div>
+</header>
+
+<div class="date-nav">
+  <button class="date-nav-btn" id="datePrevBtn" title="วันก่อนหน้า">‹</button>
+  <div>
+    <div class="date-nav-label" id="dateLabel">วันนี้</div>
+  </div>
+  <button class="date-nav-btn" id="dateNextBtn" title="วันถัดไป">›</button>
+  <button class="date-nav-today" id="dateTodayBtn">กลับไปวันนี้</button>
+  <span class="live-pill" id="livePill" style="display:none;">● กำลังอัปเดตสด</span>
+</div>
+
+<div class="alert-banner" id="alertBanner">
+  <span class="txt"><span class="bell">🔔</span> <span id="alertText">มีออเดอร์รอรับ</span></span>
+</div>
+
+<div class="setup-banner">
+  <div class="setup-toggle" onclick="toggleSetup()">⚙️ วิธีตั้งค่าเครื่องพิมพ์ครั้งแรก (กดเพื่อดู) <span id="setupCaret">▾</span></div>
+  <div class="setup-body" id="setupBody">
+    1. โหลดแอป <b>Star PassPRNT</b> (ฟรี) จาก App Store ลงในไอแพดเครื่องนี้<br>
+    2. เปิดแอป PassPRNT ขึ้นมา ไปที่การตั้งค่าเครื่องพิมพ์ แล้วเลือกเชื่อมต่อแบบ <b>USB</b> กับเครื่อง Star TSP143IIIU<br>
+    3. กลับมาหน้านี้ กดรับออเดอร์ แล้วกดปุ่ม <b>"🖨️ พิมพ์ใบสรุป"</b> — เครื่องจะสลับไปแอป PassPRNT แล้วพิมพ์ให้อัตโนมัติ จากนั้นเด้งกลับมาหน้านี้เอง<br>
+    4. ถ้ากดแล้วไม่มีอะไรเกิดขึ้น (ยังไม่ได้ลงแอป หรือยังไม่ได้ตั้งค่าเครื่องพิมพ์) ให้ใช้ปุ่ม <b>"พิมพ์สำรอง"</b> แทนชั่วคราว (จะเปิดหน้าต่างพิมพ์ของเบราว์เซอร์ ต้องเลือกเครื่องพิมพ์เอง)
+  </div>
+</div>
+
+<div class="error-banner" id="errorBanner">
+  <span>เชื่อมต่อชีตออเดอร์ไม่ได้ตอนนี้ — รายการที่แสดงอยู่อาจไม่ใช่ล่าสุด</span>
+  <button onclick="poll(true)">ลองใหม่</button>
+</div>
+
+<main>
+  <div id="emptyState" class="empty-state" style="display:none;">
+    <div class="emoji">☕</div>
+    <div id="emptyStateText">ยังไม่มีออเดอร์เข้ามาตอนนี้ค่ะ</div>
+  </div>
+  <div class="order-grid" id="orderGrid"></div>
+</main>
+
+<div class="overlay" id="previewOverlay">
+  <div class="preview-box">
+    <div class="receipt" id="previewContent"></div>
+    <div class="preview-actions">
+      <button class="close" onclick="closePreview()">ปิด</button>
+      <button class="go" id="previewFallbackBtn" style="background:var(--cream-deep);color:var(--ink);">พิมพ์สำรอง</button>
+      <button class="go" id="previewPrintBtn">🖨️ พิมพ์เลย</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="printArea"></div>
+
+<script>
+// ================== ตั้งค่า ==================
+const MENU_API_URL = "https://script.google.com/macros/s/AKfycbzmI1E3GDjhHXV1hdHnWbKdn7gjBXQf9pTqdpy0uWB74dO9JF49ciXKE0FsaMocZc__/exec";
+const POLL_MS = 8000; // ความถี่เช็คออเดอร์ใหม่จากชีต (มิลลิวินาที) — เช็คเฉพาะตอนดูออเดอร์ "วันนี้" เท่านั้น
+const ALERT_REPEAT_MS = 3500; // ความถี่เสียงเตือนซ้ำ ตราบใดที่ยังมีออเดอร์ค้างไม่ได้กด "รับออเดอร์"
+const THAI_MONTHS = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+// ==============================================
+
+let seenKeys = new Set();     // เก็บ key ที่เคยเห็นแล้ว (ทุกวันรวมกัน) — ใช้แค่ทำ animation "การ์ดใหม่"
+let printedKeys = new Set();  // จำเฉพาะในหน้าจอนี้ตอนนี้เท่านั้น (ไม่ได้บันทึกลงชีต — รีโหลดหน้าแล้วหายเป็นปกติ)
+let ordersByKey = {};
+let lastOrders = [];
+let soundOn = true;
+let audioUnlocked = false;
+let alertActive = false;
+let alertTimer = null;
+let pollTimer = null;
+let currentDateStr = todayStr(); // วันที่กำลังดูอยู่ รูปแบบ "YYYY-MM-DD"
+let pendingKeys = new Set();     // กันกดปุ่ม "รับออเดอร์" ซ้ำระหว่างรอเซิร์ฟเวอร์ตอบกลับ
+
+function escapeHtml(s) {
+  return String(s === null || s === undefined ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+function ymd(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+function todayStr() { return ymd(new Date()); }
+function dateFromYmd(s) {
+  const parts = s.split('-').map(Number);
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+function shiftYmd(s, deltaDays) {
+  const d = dateFromYmd(s);
+  d.setDate(d.getDate() + deltaDays);
+  return ymd(d);
+}
+function formatDateLabel(s) {
+  const d = dateFromYmd(s);
+  const label = d.getDate() + ' ' + THAI_MONTHS[d.getMonth()] + ' ' + (d.getFullYear() + 543);
+  return s === todayStr() ? label + ' (วันนี้)' : label;
+}
+
+// ---------- JSONP ----------
+function jsonp(url, cb) {
+  const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+  const script = document.createElement('script');
+  let done = false;
+  const finish = (data) => {
+    if (done) return;
+    done = true;
+    delete window[cbName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+    clearTimeout(timer);
+    cb(data);
+  };
+  window[cbName] = finish;
+  script.onerror = () => finish(null);
+  script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + cbName;
+  const timer = setTimeout(() => finish(null), 10000);
+  document.body.appendChild(script);
+}
+
+// ---------- เสียงแจ้งเตือน ----------
+function unlockAudio() {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination); g.gain.value = 0.0001;
+    o.start(); o.stop(ctx.currentTime + 0.05);
+  } catch (e) {}
+}
+document.addEventListener('touchstart', unlockAudio, { once: true });
+document.addEventListener('click', unlockAudio, { once: true });
+
+function beep() {
+  if (!soundOn) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [880, 1100].forEach((freq, i) => {
+      const o = ctx.createOscillator(); const g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = 'sine'; o.frequency.value = freq;
+      const start = ctx.currentTime + i * 0.16;
+      g.gain.setValueAtTime(0.001, start);
+      g.gain.linearRampToValueAtTime(0.18, start + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, start + 0.16);
+      o.start(start); o.stop(start + 0.18);
+    });
+  } catch (e) {}
+}
+
+function toggleSound() {
+  soundOn = !soundOn;
+  document.getElementById('soundBtn').textContent = soundOn ? '🔊' : '🔇';
+  if (!soundOn) {
+    clearInterval(alertTimer);
+    alertTimer = null;
+    alertActive = false;
+  } else {
+    updateAlarmFromOrders(lastOrders);
+  }
+}
+
+function startAlertSound() {
+  if (!soundOn) return;
+  alertActive = true;
+  beep();
+  clearInterval(alertTimer);
+  alertTimer = setInterval(function () { if (soundOn) beep(); }, ALERT_REPEAT_MS);
+}
+
+function silenceAlarm() {
+  alertActive = false;
+  clearInterval(alertTimer);
+  alertTimer = null;
+  document.getElementById('alertBanner').classList.remove('show');
+}
+
+// เสียงเตือนขึ้นอยู่กับ "จำนวนออเดอร์ที่ยังไม่ได้กดรับ" ของวันนี้เท่านั้น (ไม่เกี่ยวกับวันอื่นที่กำลังดูย้อนหลัง)
+// ข้อดี: ต่อให้รีเฟรชหน้าเว็บ หรือมีจอเคาน์เตอร์เปิดพร้อมกันหลายจอ สถานะจะตรงกันเสมอเพราะเก็บไว้ที่ชีต ไม่ใช่ที่เครื่อง
+function updateAlarmFromOrders(orders) {
+  if (currentDateStr !== todayStr()) { silenceAlarm(); return; }
+  const count = orders.filter(o => !o.accepted).length;
+  if (count > 0) {
+    document.getElementById('alertText').textContent = 'มีออเดอร์รอรับ ' + count + ' รายการ — กด "รับออเดอร์" ที่การ์ดเพื่อหยุดเสียง';
+    document.getElementById('alertBanner').classList.add('show');
+    if (!alertActive) startAlertSound();
+  } else {
+    silenceAlarm();
+  }
+}
+
+function toggleSetup() {
+  const body = document.getElementById('setupBody');
+  const caret = document.getElementById('setupCaret');
+  const show = !body.classList.contains('show');
+  body.classList.toggle('show', show);
+  caret.textContent = show ? '▴' : '▾';
+}
+
+function showToast(msg, ms) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), ms || 4200);
+}
+
+// ---------- นำทางวันที่ ----------
+function refreshDateNav() {
+  document.getElementById('dateLabel').textContent = formatDateLabel(currentDateStr);
+  document.getElementById('dateNextBtn').disabled = (currentDateStr >= todayStr());
+  document.getElementById('dateTodayBtn').classList.toggle('hide', currentDateStr === todayStr());
+  document.getElementById('livePill').style.display = (currentDateStr === todayStr()) ? 'inline-block' : 'none';
+  document.getElementById('emptyStateText').textContent =
+    (currentDateStr === todayStr()) ? 'ยังไม่มีออเดอร์เข้ามาตอนนี้ค่ะ' : 'ไม่มีออเดอร์ในวันที่เลือกไว้ค่ะ';
+}
+
+function goToDate(newDateStr) {
+  currentDateStr = newDateStr;
+  refreshDateNav();
+  startPolling();
+}
+document.getElementById('datePrevBtn').addEventListener('click', () => goToDate(shiftYmd(currentDateStr, -1)));
+document.getElementById('dateNextBtn').addEventListener('click', () => {
+  if (currentDateStr < todayStr()) goToDate(shiftYmd(currentDateStr, 1));
+});
+document.getElementById('dateTodayBtn').addEventListener('click', () => goToDate(todayStr()));
+
+// ---------- ดึงออเดอร์ ----------
+function startPolling() {
+  clearInterval(pollTimer);
+  pollTimer = null;
+  poll();
+  if (currentDateStr === todayStr()) {
+    pollTimer = setInterval(poll, POLL_MS);
+  }
+}
+
+function poll(manual) {
+  const requestedDate = currentDateStr;
+  jsonp(MENU_API_URL + '?action=getOrders&date=' + encodeURIComponent(requestedDate), function (res) {
+    if (requestedDate !== currentDateStr) return; // ผู้ใช้เปลี่ยนวันไปแล้วระหว่างรอผลลัพธ์เก่า ทิ้งไป
+    const dot = document.getElementById('statusDot');
+    if (!res || !res.ok) {
+      dot.classList.add('error');
+      document.getElementById('errorBanner').classList.add('show');
+      if (manual) showToast('ดึงออเดอร์ไม่สำเร็จ ลองใหม่อีกครั้งค่ะ');
+      return;
+    }
+    dot.classList.remove('error');
+    document.getElementById('errorBanner').classList.remove('show');
+    applyOrders(res.orders || []);
+  });
+}
+
+function applyOrders(orders) {
+  lastOrders = orders;
+  const isFirstLoad = seenKeys.size === 0 && !applyOrders._loadedOnce;
+  applyOrders._loadedOnce = true;
+
+  const newlySeen = [];
+  orders.forEach(o => {
+    if (!seenKeys.has(o.key)) newlySeen.push(o.key);
+    seenKeys.add(o.key);
+    ordersByKey[o.key] = o;
+  });
+
+  renderList(orders, newlySeen);
+
+  document.getElementById('countPill').textContent = orders.length + ' ออเดอร์';
+  const now = new Date();
+  document.getElementById('updatedLabel').textContent = 'อัปเดตล่าสุด ' +
+    pad2(now.getHours()) + ':' + pad2(now.getMinutes()) + ':' + pad2(now.getSeconds()) + ' น.';
+
+  updateAlarmFromOrders(orders);
+}
+
+function renderList(orders, newlySeen) {
+  const grid = document.getElementById('orderGrid');
+  const empty = document.getElementById('emptyState');
+  const isToday = currentDateStr === todayStr();
+
+  if (orders.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    grid.innerHTML = orders.map(o => renderCard(o, isToday && newlySeen && newlySeen.indexOf(o.key) >= 0)).join('');
+  }
+}
+
+function renderCard(o, isNew) {
+  const printed = printedKeys.has(o.key);
+  const itemsHtml = o.items.map(it => {
+    const meta = [it.temp, it.roast].filter(Boolean).join(' · ');
+    return '<div class="oc-item"><span class="name">' + escapeHtml(it.nameTh) +
+      (meta ? '<span class="meta">' + escapeHtml(meta) + '</span>' : '') +
+      '</span><span class="price">' + it.price + '฿</span></div>';
+  }).join('');
+
+  const tags = [];
+  if (o.accepted) tags.push('<span class="tag accepted">✓ รับออเดอร์แล้ว' + (o.acceptedAt ? ' ' + escapeHtml(o.acceptedAt) : '') + '</span>');
+  if (o.customerGroup) tags.push('<span class="tag">' + escapeHtml(o.customerGroup) + '</span>');
+  if (o.discountLabel) tags.push('<span class="tag discount">ลด ' + escapeHtml(o.discountLabel) + '</span>');
+  if (o.payment) tags.push('<span class="tag pay">' + escapeHtml(o.payment) + '</span>');
+
+  const actionsHtml = o.accepted
+    ? ('<div class="oc-actions">' +
+        '<button class="btn-print' + (printed ? ' done' : '') + '" data-action="print">' + (printed ? '✓ พิมพ์แล้ว (พิมพ์อีกครั้ง)' : '🖨️ พิมพ์ใบสรุป') + '</button>' +
+        '<button class="btn-ghost" data-action="preview">ดูตัวอย่าง</button>' +
+      '</div>')
+    : ('<div class="oc-actions">' +
+        '<button class="btn-accept" data-action="accept">✅ รับออเดอร์</button>' +
+      '</div>');
+
+  return '<div class="order-card' + (isNew ? ' is-new' : '') + (printed ? ' printed' : '') + (!o.accepted ? ' pending' : '') +
+    '" data-key="' + escapeHtml(o.key) + '">' +
+    '<div class="oc-top"><div class="oc-queue">#' + String(o.queue).padStart(2, '0') + '</div><div class="oc-time">' + escapeHtml(o.time) + '</div></div>' +
+    '<div class="oc-customer"><div class="oc-name">' + escapeHtml(o.name) + '</div>' +
+    '<div class="oc-meta-row">' + escapeHtml(o.location) + (o.phone ? ' · ' + escapeHtml(o.phone) : '') + '</div></div>' +
+    '<div class="oc-tags">' + tags.join('') + '</div>' +
+    '<div class="oc-divider"></div>' +
+    itemsHtml +
+    '<div class="oc-total"><span class="label">รวม</span><span class="value">' + o.total + ' ฿</span></div>' +
+    actionsHtml +
+    '</div>';
+}
+
+// ---------- คลิกปุ่มในการ์ด (ใช้ event delegation แทน onclick ฝังสตริง เพื่อกันปัญหาชื่อ/ที่อยู่ลูกค้าที่มีเครื่องหมายคำพูด ฯลฯ ทำให้โค้ด HTML พัง) ----------
+document.getElementById('orderGrid').addEventListener('click', function (e) {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const card = btn.closest('.order-card');
+  if (!card) return;
+  const key = card.getAttribute('data-key');
+  const action = btn.getAttribute('data-action');
+  if (action === 'print') {
+    printOrder(key, btn);
+  } else if (action === 'preview') {
+    previewOrder(key);
+  } else if (action === 'accept') {
+    acceptOrder(key);
+  }
+});
+
+// ---------- รับออเดอร์ ----------
+function acceptOrder(key) {
+  if (pendingKeys.has(key)) return;
+  pendingKeys.add(key);
+
+  const o = ordersByKey[key];
+  if (o) {
+    // อัปเดตหน้าจอทันทีแบบ optimistic (ไม่ต้องรอเซิร์ฟเวอร์ตอบ) เพื่อความไวในการใช้งานหน้าเคาน์เตอร์
+    o.acceptedAt = 'เมื่อครู่';
+    o.accepted = true;
+    const idx = lastOrders.findIndex(x => x.key === key);
+    if (idx >= 0) lastOrders[idx] = o;
+    renderList(lastOrders, []);
+    updateAlarmFromOrders(lastOrders);
+  }
+
+  jsonp(MENU_API_URL + '?action=acknowledgeOrder&key=' + encodeURIComponent(key), function (res) {
+    pendingKeys.delete(key);
+    if (!res || !res.ok) {
+      showToast('บันทึกการรับออเดอร์ไม่สำเร็จ ลองกดใหม่อีกครั้งค่ะ');
+      if (o) { o.accepted = false; o.acceptedAt = ''; renderList(lastOrders, []); updateAlarmFromOrders(lastOrders); }
+    }
+  });
+}
+
+// ---------- สร้างเนื้อหาใบเสร็จ ----------
+function receiptInnerHtml(o) {
+  const itemsHtml = o.items.map((it, i) => {
+    const meta = [it.temp, it.roast].filter(Boolean).join(' / ');
+    return '<div class="r-item-row"><span>' + (i + 1) + '. ' + escapeHtml(it.nameTh) + '</span><span>' + it.price + '฿</span></div>' +
+      (meta ? '<div class="r-item-meta">' + escapeHtml(meta) + '</div>' : '');
+  }).join('');
+
+  const now = new Date();
+  const printedAt = pad2(now.getHours()) + ':' + pad2(now.getMinutes());
+
+  return '<div class="r-center r-shop">สาระพัน Cafe</div>' +
+    '<div class="r-center r-sub">ใบสรุปออเดอร์ (บาร์/ครัว)</div>' +
+    '<div class="r-center r-queue">#' + String(o.queue).padStart(2, '0') + '</div>' +
+    '<div class="r-center r-queue-label">คิว · ' + escapeHtml(o.time) + '</div>' +
+    '<div class="r-divider"></div>' +
+    '<div class="r-row"><span>ชื่อ</span><span>' + escapeHtml(o.name) + '</span></div>' +
+    '<div class="r-row"><span>สถานที่</span><span>' + escapeHtml(o.location) + '</span></div>' +
+    '<div class="r-row"><span>โทร</span><span>' + escapeHtml(o.phone) + '</span></div>' +
+    (o.customerGroup ? '<div class="r-row"><span>กลุ่มลูกค้า</span><span>' + escapeHtml(o.customerGroup) + '</span></div>' : '') +
+    (o.memberNumber ? '<div class="r-row"><span>เบอร์สมาชิก</span><span>' + escapeHtml(o.memberNumber) + '</span></div>' : '') +
+    (o.discountLabel ? '<div class="r-row"><span>ส่วนลด</span><span>' + escapeHtml(o.discountLabel) + '</span></div>' : '') +
+    '<div class="r-divider"></div>' +
+    itemsHtml +
+    '<div class="r-divider"></div>' +
+    '<div class="r-total-row"><span>รวม</span><span>' + o.total + '฿</span></div>' +
+    '<div class="r-row"><span>ชำระเงิน</span><span>' + escapeHtml(o.payment) + '</span></div>' +
+    '<div class="r-footer">พิมพ์เมื่อ ' + printedAt + ' น.</div>';
+}
+
+function receiptFullDoc(o) {
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"><style>' +
+    "body{font-family:'Courier New',monospace;width:380px;margin:0;padding:14px 10px;color:#000;font-size:14px;}" +
+    '.r-center{text-align:center;}.r-shop{font-size:19px;font-weight:700;}.r-sub{font-size:12px;margin-bottom:8px;color:#333;}' +
+    '.r-queue{font-size:32px;font-weight:700;margin-top:4px;}.r-queue-label{font-size:11px;color:#333;margin-bottom:8px;}' +
+    '.r-divider{border-top:1px dashed #000;margin:8px 0;}.r-row{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin:2px 0;}' +
+    '.r-item-row{display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin-top:4px;}' +
+    '.r-item-meta{font-size:12px;color:#333;margin:0 0 4px 14px;}' +
+    '.r-total-row{display:flex;justify-content:space-between;font-size:17px;font-weight:700;margin-top:4px;}' +
+    '.r-footer{font-size:11px;text-align:center;margin-top:12px;color:#444;}' +
+    '</style></head><body>' + receiptInnerHtml(o) + '</body></html>';
+}
+
+// ---------- พิมพ์ผ่าน Star PassPRNT ----------
+function printOrder(key, btnEl) {
+  const o = ordersByKey[key];
+  if (!o) return;
+
+  const backUrl = window.location.href.split('#')[0];
+  const url = 'starpassprnt://v1/print/nopreview?' +
+    'back=' + encodeURIComponent(backUrl) +
+    '&html=' + encodeURIComponent(receiptFullDoc(o)) +
+    '&size=576&cut=partial&drawer=off&popup=enable';
+
+  let appOpened = false;
+  const markOpened = () => { appOpened = true; };
+  document.addEventListener('visibilitychange', function vis() {
+    if (document.hidden) { markOpened(); document.removeEventListener('visibilitychange', vis); }
+  });
+  window.addEventListener('pagehide', markOpened, { once: true });
+
+  window.location.href = url;
+
+  setTimeout(() => {
+    if (!appOpened) {
+      showToast('ไม่พบแอป Star PassPRNT บนเครื่องนี้ (หรือยังไม่ได้ตั้งค่าเครื่องพิมพ์) — ดูวิธีตั้งค่าด้านบน หรือกด "พิมพ์สำรอง" จากหน้าตัวอย่างแทน', 6000);
+    }
+  }, 1500);
+
+  markPrinted(key, btnEl);
+}
+
+// ---------- พิมพ์สำรองผ่านเบราว์เซอร์ (ไม่ผ่าน PassPRNT) ----------
+function printOrderFallback(key) {
+  const o = ordersByKey[key];
+  if (!o) return;
+  document.getElementById('printArea').innerHTML = '<div class="receipt">' + receiptInnerHtml(o) + '</div>';
+  window.print();
+  markPrinted(key);
+}
+
+function markPrinted(key, btnEl) {
+  printedKeys.add(key);
+  if (btnEl) {
+    btnEl.textContent = '✓ พิมพ์แล้ว (พิมพ์อีกครั้ง)';
+    btnEl.classList.add('done');
+    const card = btnEl.closest('.order-card');
+    if (card) card.classList.add('printed');
+    return;
+  }
+  document.querySelectorAll('.order-card').forEach(function (card) {
+    if (card.getAttribute('data-key') !== key) return;
+    card.classList.add('printed');
+    const btn = card.querySelector('.btn-print');
+    if (btn) { btn.textContent = '✓ พิมพ์แล้ว (พิมพ์อีกครั้ง)'; btn.classList.add('done'); }
+  });
+}
+
+// ---------- ดูตัวอย่างก่อนพิมพ์ ----------
+let previewKey = null;
+function previewOrder(key) {
+  const o = ordersByKey[key];
+  if (!o) return;
+  previewKey = key;
+  document.getElementById('previewContent').innerHTML = receiptInnerHtml(o);
+  document.getElementById('previewOverlay').classList.add('show');
+}
+function closePreview() {
+  document.getElementById('previewOverlay').classList.remove('show');
+  previewKey = null;
+}
+document.getElementById('previewPrintBtn').addEventListener('click', function () {
+  if (!previewKey) return;
+  const key = previewKey;
+  closePreview();
+  printOrder(key, null);
+});
+document.getElementById('previewFallbackBtn').addEventListener('click', function () {
+  if (!previewKey) return;
+  const key = previewKey;
+  closePreview();
+  printOrderFallback(key);
+});
+document.getElementById('previewOverlay').addEventListener('click', function (e) {
+  if (e.target === this) closePreview();
+});
+
+// ---------- เริ่มทำงาน ----------
+refreshDateNav();
+startPolling();
+</script>
+</body>
+</html>
