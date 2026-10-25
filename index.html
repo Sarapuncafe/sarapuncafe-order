@@ -16,7 +16,7 @@
   })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@500;600;700&family=Noto+Sans+Thai:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream: #FAF8F2;
@@ -30,7 +30,10 @@
     --disabled: #C9C6BA;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--cream-deep); color: var(--ink); font-family: 'Noto Sans Thai', sans-serif; font-weight: 300;
+  /* ใหม่: ปุ่ม/ช่องกรอกข้อมูล ไม่สืบทอดฟอนต์จาก body ให้อัตโนมัติ (ค่าเริ่มต้นของเบราว์เซอร์) ต้องบังคับ inherit เอง
+     ไม่งั้นจะโชว์เป็นฟอนต์ระบบ (เช่น Arial) แทนที่จะเป็น Prompt ที่ตั้งไว้ */
+  button, input, textarea, select { font-family: inherit; }
+  body { background: var(--cream-deep); color: var(--ink); font-family: 'Prompt', sans-serif; font-weight: 400;
     min-height: 100vh; display: flex; justify-content: center; overflow-x: hidden; }
   .phone { width: 100%; max-width: 430px; height: 100vh; position: relative; background: var(--cream);
     overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
@@ -44,7 +47,7 @@
       repeating-linear-gradient(135deg, #7C6A52, #7C6A52 22px, #6E5D48 22px, #6E5D48 44px);
   }
   .banner-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    color: rgba(250,248,242,0.65); font-family: 'Baloo Thambi 2', sans-serif; font-size: 13.5px; letter-spacing: 0.1em; text-align: center; padding: 0 30px; }
+    color: rgba(250,248,242,0.65); font-family: 'Prompt', sans-serif; font-size: 13.5px; letter-spacing: 0.1em; text-align: center; padding: 0 30px; }
   .bill-btn { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 50%;
     background: rgba(250,248,242,0.92); border: none; display: flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.18); cursor: pointer; z-index: 2; }
@@ -53,7 +56,7 @@
   .logo-mark { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 4px solid var(--cream);
     position: absolute; left: 22px; top: -42px; box-shadow: 0 6px 16px rgba(75,86,56,0.22); }
   .brand-text { padding-left: 100px; padding-top: 14px; }
-  .brand-name { font-family: 'Noto Sans Thai', sans-serif; font-weight: 500; font-size: 24.5px; color: var(--ink); }
+  .brand-name { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 24.5px; color: var(--ink); }
   .brand-hours { font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
   .closed-banner { display: flex; align-items: center; gap: 8px; background: rgba(196,90,60,0.12);
     border: 1px solid rgba(196,90,60,0.35); color: #A4432B; border-radius: 12px; padding: 10px 14px;
@@ -63,7 +66,7 @@
   .tabs { display: flex; gap: 8px; padding: 6px 22px 16px; overflow-x: auto;
     scrollbar-width: none; -ms-overflow-style: none; } /* ใหม่: ซ่อนแถบเลื่อน ยังเลื่อนซ้าย-ขวาได้ปกติ */
   .tabs::-webkit-scrollbar { display: none; }
-  .tab { flex: none; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 500; font-size: 13px;
+  .tab { flex: none; font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 13px;
     padding: 9px 16px; border-radius: 100px; background: transparent; color: var(--olive-deep);
     border: 1px solid var(--olive); cursor: pointer; white-space: nowrap; transition: all 0.15s ease; letter-spacing: 0.03em; }
   .tab.active { background: var(--olive); color: var(--cream); border-color: var(--olive); }
@@ -71,7 +74,7 @@
 
   /* ---------- GRID ---------- */
   main { padding: 4px 18px 150px; }
-  .cat-label { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.04em;
+  .cat-label { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: 0.04em;
     color: var(--olive-deep); text-transform: uppercase; margin: 26px 4px 12px; }
   /* ใหม่: เปลี่ยนจากการ์ด grid 2 คอลัมน์ เป็นแถวเดียว (list) ตามตัวอย่างที่พี่แคทส่งมา */
   .grid { display: flex; flex-direction: column; gap: 10px; }
@@ -87,7 +90,7 @@
     font-size: 19px; box-shadow: 0 3px 8px rgba(75,86,56,0.3); }
   .card-name { font-size: 17px; font-weight: 500; }
   .card-name-en { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
-  .card-price { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: var(--olive-deep); margin-top: 4px; }
+  .card-price { font-family: 'Prompt', sans-serif; font-size: 13.5px; color: var(--olive-deep); margin-top: 4px; }
   .empty-note { font-size: 14px; color: var(--ink-soft); padding: 18px 4px; text-align: center; }
 
   .cartbar { position: fixed; bottom: 0; width: 100%; max-width: 430px; padding: 14px 18px 22px;
@@ -96,8 +99,8 @@
     justify-content: space-between; cursor: pointer; box-shadow: 0 10px 24px rgba(75,86,56,0.28);
     opacity: 0; transform: translateY(12px); pointer-events: none; transition: all 0.2s ease; }
   .cartbar-inner.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  .cartbar-text { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; color: var(--cream); font-size: 15.5px; }
-  .cartbar-total { font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--cream); font-size: 15.5px; }
+  .cartbar-text { font-family: 'Prompt', sans-serif; font-weight: 600; color: var(--cream); font-size: 15.5px; }
+  .cartbar-total { font-family: 'Prompt', sans-serif; font-weight: 500; color: var(--cream); font-size: 15.5px; }
 
   /* ---------- DETAIL PAGE ---------- */
   .page-detail-wrap { position: fixed; inset: 0; display: flex; justify-content: center; pointer-events: none; z-index: 50; }
@@ -116,22 +119,22 @@
   .item-card-name-en { font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
 
   .opt-section { margin-top: 26px; }
-  .opt-title { font-family: 'Noto Sans Thai', sans-serif; font-weight: 500; font-size: 17px; margin-bottom: 10px; }
+  .opt-title { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 17px; margin-bottom: 10px; }
   .opt-row { display: flex; align-items: center; gap: 12px; padding: 10px 2px; cursor: pointer; }
   .radio { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--ink-soft); flex: none; position: relative; }
   .radio.checked { border-color: var(--olive); }
   .radio.checked::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--olive); }
   .radio.square { border-radius: 5px; }
   .opt-name { flex: 1; font-size: 15.5px; }
-  .opt-price { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--ink-soft); }
+  .opt-price { font-family: 'Prompt', sans-serif; font-size: 14px; color: var(--ink-soft); }
   .opt-section-divider { border-top: 1px solid var(--line); margin-top: 22px; }
 
   .detail-cartbar { padding: 28px 0 30px; }
   .detail-cartbar-inner { background: var(--olive); border-radius: 100px; padding: 15px 24px; display: flex;
     align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 10px 24px rgba(75,86,56,0.28); }
   .detail-cartbar-inner.disabled { background: var(--disabled); box-shadow: none; cursor: not-allowed; justify-content: center; }
-  .detail-cartbar-text { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; color: var(--cream); font-size: 15.5px; }
-  .detail-cartbar-total { font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--cream); font-size: 15.5px; }
+  .detail-cartbar-text { font-family: 'Prompt', sans-serif; font-weight: 600; color: var(--cream); font-size: 15.5px; }
+  .detail-cartbar-total { font-family: 'Prompt', sans-serif; font-weight: 500; color: var(--cream); font-size: 15.5px; }
 
   /* ---------- ป็อปอัพเล็ก (ใช้ร่วมกันหลายจุด เช่น ที่อยู่) ---------- */
   .overlay { position: fixed; inset: 0; background: rgba(59,59,50,0.55); display: flex; align-items: center;
@@ -149,9 +152,9 @@
     background: var(--cream-deep); border: none; color: var(--ink); font-size: 18px; cursor: pointer;
     display: flex; align-items: center; justify-content: center; }
   .cart-page-logo { width: 26px; height: 26px; margin: 0 auto 6px; color: var(--olive); }
-  .cart-page-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 19px; color: var(--ink); }
+  .cart-page-title { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 19px; color: var(--ink); }
   .cart-page-sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
-  .cart-section-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 15.5px; color: var(--ink);
+  .cart-section-title { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 15.5px; color: var(--ink);
     margin: 22px 20px 12px; }
   .cart-item-card { background: #fff; border-radius: 16px; padding: 14px; margin: 0 18px 12px; display: flex; gap: 12px;
     box-shadow: 0 3px 12px rgba(0,0,0,0.06); }
@@ -167,38 +170,38 @@
   .cart-item-trash:hover { opacity: 1; }
   .cart-item-meta { font-size: 11.5px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
   .cart-item-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-  .cart-item-price { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 15px; color: var(--olive-deep); }
+  .cart-item-price { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 15px; color: var(--olive-deep); }
   .cart-qty-stepper { display: flex; align-items: center; gap: 10px; }
   .cart-qty-btn { width: 26px; height: 26px; border-radius: 50%; border: none; cursor: pointer; font-size: 15px;
-    display: flex; align-items: center; justify-content: center; font-family: 'Baloo Thambi 2', sans-serif; }
+    display: flex; align-items: center; justify-content: center; font-family: 'Prompt', sans-serif; }
   .cart-qty-btn.minus { background: var(--cream-deep); color: var(--ink); }
   .cart-qty-btn.plus { background: var(--olive); color: var(--cream); }
-  .cart-qty-num { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 14.5px; min-width: 14px; text-align: center; }
+  .cart-qty-num { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 14.5px; min-width: 14px; text-align: center; }
   .cart-summary-card { background: #fff; border-radius: 16px; padding: 18px; margin: 6px 18px 0; box-shadow: 0 3px 12px rgba(0,0,0,0.06); }
-  .cart-summary-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 12px; }
+  .cart-summary-title { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 12px; }
   .cart-summary-divider { border-top: 1px solid var(--line); margin: 10px 0; }
   .cart-summary-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--ink-soft); padding: 6px 0; }
   .cart-summary-total { display: flex; justify-content: space-between; align-items: center; background: var(--cream-deep);
-    border-radius: 12px; padding: 13px 16px; margin-top: 4px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 15.5px; color: var(--ink); }
-  .cart-summary-total span:last-child { font-family: 'JetBrains Mono', monospace; color: var(--olive-deep); }
+    border-radius: 12px; padding: 13px 16px; margin-top: 4px; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 15.5px; color: var(--ink); }
+  .cart-summary-total span:last-child { font-family: 'Prompt', sans-serif; color: var(--olive-deep); }
   .cart-page-footer { position: fixed; bottom: 0; width: 100%; max-width: 430px; padding: 14px 18px calc(env(safe-area-inset-bottom, 0px) + 74px);
     background: linear-gradient(180deg, rgba(250,248,242,0) 0%, var(--cream) 30%); z-index: 5;
     display: flex; align-items: center; justify-content: space-between; gap: 14px;
     opacity: 0; transform: translateY(12px); pointer-events: none; transition: all 0.2s ease; }
   .cart-page-footer.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .cart-footer-label { font-size: 11.5px; color: var(--ink-soft); }
-  .cart-footer-total { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 19px; color: var(--ink); }
+  .cart-footer-total { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 19px; color: var(--ink); }
   .cart-footer-btn { flex: none; display: flex; align-items: center; gap: 6px; padding: 14px 24px; background: var(--olive);
-    color: var(--cream); border: none; border-radius: 100px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600;
+    color: var(--cream); border: none; border-radius: 100px; font-family: 'Prompt', sans-serif; font-weight: 600;
     font-size: 15px; cursor: pointer; box-shadow: 0 10px 24px rgba(75,86,56,0.28); }
 
   /* ---------- ใหม่ (31): ตะกร้าว่างเปล่า (ไม่ใช่ใบสั่งซื้อ 0 บาท) ---------- */
   .cart-empty-state { text-align: center; padding: 40px 24px 4px; }
   .cart-empty-icon { width: 92px; height: 92px; margin: 4px auto 18px; color: var(--olive); opacity: 0.9; }
-  .cart-empty-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 18px; color: var(--ink); margin-bottom: 6px; }
+  .cart-empty-title { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 18px; color: var(--ink); margin-bottom: 6px; }
   .cart-empty-sub { font-size: 13px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 22px; }
   .cart-empty-btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 26px; background: var(--olive); color: var(--cream);
-    border: none; border-radius: 100px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 14.5px; cursor: pointer; }
+    border: none; border-radius: 100px; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 14.5px; cursor: pointer; }
   /* ---------- CHECKOUT PAGE ---------- */
   .page-checkout-wrap { position: fixed; inset: 0; display: flex; justify-content: center; pointer-events: none; z-index: 30; }
   .page-checkout { pointer-events: auto; width: 100%; max-width: 430px; height: 100vh; background: var(--cream);
@@ -211,23 +214,23 @@
   .checkout-item-card .card-img-wrap { width: 64px; height: 64px; flex: none; background: var(--cream); }
   .checkout-item-card .card-img-wrap svg { width: 34px; height: 42px; }
   .checkout-section-title { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
-  .checkout-section-title span:first-child { font-family: 'Noto Sans Thai', sans-serif; font-weight: 500; font-size: 17.5px; }
-  .checkout-edit-link { font-family: 'Noto Sans Thai', sans-serif; font-size: 13.5px; color: var(--olive);
+  .checkout-section-title span:first-child { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 17.5px; }
+  .checkout-edit-link { font-family: 'Prompt', sans-serif; font-size: 13.5px; color: var(--olive);
     text-decoration: underline; cursor: pointer; background: none; border: none; padding: 4px; }
   .checkout-meta-row { display: flex; justify-content: space-between; font-size: 15px; margin-top: 8px; }
-  .checkout-meta-row span:last-child { font-family: 'JetBrains Mono', monospace; color: var(--ink-soft); }
-  .checkout-subtotal { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace;
+  .checkout-meta-row span:last-child { font-family: 'Prompt', sans-serif; color: var(--ink-soft); }
+  .checkout-subtotal { display: flex; justify-content: space-between; font-family: 'Prompt', sans-serif;
     font-weight: 500; font-size: 17px; color: var(--olive-deep); margin-top: 10px; }
   .checkout-divider { border-top: 1px solid var(--line); margin-top: 22px; }
-  .checkout-grand-total { display: flex; justify-content: space-between; font-family: 'Noto Sans Thai', sans-serif;
+  .checkout-grand-total { display: flex; justify-content: space-between; font-family: 'Prompt', sans-serif;
     font-weight: 500; font-size: 19px; margin-top: 18px; }
-  .checkout-grand-total span:last-child { font-family: 'JetBrains Mono', monospace; color: var(--olive-deep); }
+  .checkout-grand-total span:last-child { font-family: 'Prompt', sans-serif; color: var(--olive-deep); }
   .field-input { width: 100%; padding: 12px 14px; margin-top: 10px; border: 1px solid var(--line); border-radius: 12px;
-    background: var(--cream-deep); font-family: 'Noto Sans Thai', sans-serif; font-size: 15.5px; color: var(--ink); }
+    background: var(--cream-deep); font-family: 'Prompt', sans-serif; font-size: 15.5px; color: var(--ink); }
   .field-input::placeholder { color: var(--ink-soft); }
   .pay-row { display: flex; align-items: center; gap: 12px; padding: 10px 2px; cursor: pointer; }
   .cash-note-block { background: var(--cream-deep); border-radius: 16px; padding: 16px 18px; margin-top: 12px; }
-  .cash-note-title { font-family: 'Noto Sans Thai', sans-serif; font-weight: 500; font-size: 14px; color: var(--ink);
+  .cash-note-title { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 14px; color: var(--ink);
     line-height: 1.5; margin-bottom: 4px; }
   .cash-note-block .pay-row { padding: 9px 2px; }
   .cash-other-input { margin-top: 6px; }
@@ -240,10 +243,10 @@
     box-shadow: 0 2px 10px rgba(59,59,50,0.12); }
   .qr-note { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
   .upload-btn { width: 100%; margin-top: 14px; padding: 13px; border-radius: 100px; border: 1px dashed var(--olive);
-    background: transparent; color: var(--olive-deep); font-family: 'Noto Sans Thai', sans-serif; font-size: 15px; cursor: pointer; }
+    background: transparent; color: var(--olive-deep); font-family: 'Prompt', sans-serif; font-size: 15px; cursor: pointer; }
   .upload-btn.done { border-style: solid; background: var(--cream-deep); }
   .submit-btn { width: 100%; margin-top: 26px; padding: 15px; border: none; border-radius: 100px;
-    background: var(--olive); color: var(--cream); font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600;
+    background: var(--olive); color: var(--cream); font-family: 'Prompt', sans-serif; font-weight: 600;
     font-size: 16px; cursor: pointer; }
   .submit-btn.disabled { background: var(--disabled); cursor: not-allowed; }
 
@@ -255,13 +258,13 @@
   .page-confirm.show { transform: translateY(0); }
   .confirm-body { padding: 4px 22px 40px; text-align: center; }
   .status-list-tabs { display: flex; gap: 22px; text-align: left; padding: 18px 0 0; border-bottom: 1px solid var(--line); }
-  .status-list-tab { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 500; font-size: 15.5px; color: var(--ink-soft);
+  .status-list-tab { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 15.5px; color: var(--ink-soft);
     padding-bottom: 10px; cursor: pointer; border-bottom: 2px solid transparent; }
   .status-list-tab.active { color: var(--olive-deep); border-bottom-color: var(--olive); }
   .status-list-empty { text-align: center; color: var(--ink-soft); font-size: 14.5px; padding: 40px 0; }
   .order-card-list { text-align: left; padding-top: 6px; }
   .order-card { background: #fff; border-radius: 16px; padding: 16px; margin-top: 14px; box-shadow: 0 3px 12px rgba(0,0,0,0.06); }
-  .order-card-num { font-family: 'Noto Sans Thai', sans-serif; font-weight: 500; font-size: 17px; color: var(--ink); }
+  .order-card-num { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 17px; color: var(--ink); }
   .order-card-status { font-size: 14px; color: var(--olive-deep); font-weight: 600; margin-top: 4px; }
   .order-card-divider { border-top: 1px solid var(--line); margin: 12px 0; }
   .order-card-row { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; margin-top: 6px; }
@@ -272,24 +275,24 @@
     display: flex; align-items: center; justify-content: center; }
   .order-card-thumb svg { width: 30px; height: 38px; }
   .order-card-bottom { display: flex; justify-content: space-between; align-items: center; }
-  .order-card-total { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 15.5px; color: var(--ink); }
+  .order-card-total { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 15.5px; color: var(--ink); }
   .order-card-link { font-size: 14px; color: var(--olive); cursor: pointer; }
-  .status-back-btn { display: block; background: none; border: none; font-family: 'Noto Sans Thai', sans-serif;
+  .status-back-btn { display: block; background: none; border: none; font-family: 'Prompt', sans-serif;
     font-size: 14.5px; color: var(--olive-deep); cursor: pointer; padding: 18px 0 0; text-align: left; }
   .confirm-check { width: 76px; height: 76px; border-radius: 50%; background: var(--olive); color: var(--cream);
     display: flex; align-items: center; justify-content: center; font-size: 38px; margin: 20px auto 18px;
     box-shadow: 0 0 0 10px var(--cream-deep); }
-  .confirm-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 21.5px; color: var(--olive-deep); }
+  .confirm-title { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 21.5px; color: var(--olive-deep); }
   .confirm-sub { font-size: 14.5px; color: var(--ink-soft); margin-top: 6px; }
-  .confirm-queue-num { font-family: 'JetBrains Mono', monospace; font-size: 51.5px; font-weight: 500; color: var(--olive);
+  .confirm-queue-num { font-family: 'Prompt', sans-serif; font-size: 51.5px; font-weight: 500; color: var(--olive);
     margin: 18px 0 2px; }
   .confirm-queue-label { font-size: 12.5px; letter-spacing: 0.14em; color: var(--ink-soft); }
   .confirm-ahead-count { margin-top: 6px; font-size: 14px; color: var(--olive-deep); font-weight: 500; }
   .confirm-wait-time { display: inline-block; margin-top: 12px; padding: 7px 16px; border-radius: 100px;
-    background: var(--cream-deep); font-family: 'Noto Sans Thai', sans-serif; font-size: 14px; color: var(--olive-deep); }
+    background: var(--cream-deep); font-family: 'Prompt', sans-serif; font-size: 14px; color: var(--olive-deep); }
   .status-tracker { margin: 22px 0 0; background: #fff; border-radius: 16px; padding: 20px 12px 16px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
-  .status-tracker-title { text-align: center; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600;
+  .status-tracker-title { text-align: center; font-family: 'Prompt', sans-serif; font-weight: 600;
     font-size: 15.5px; color: var(--ink); margin-bottom: 16px; }
   .status-steps { display: flex; align-items: flex-start; }
   .status-step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
@@ -303,19 +306,19 @@
   .status-step.done .status-label { color: #2F8F5B; }
   .status-step.current .status-label { color: #2F8F5B; font-weight: 700; }
   .confirm-block { text-align: left; margin-top: 26px; }
-  .confirm-block-title { font-family: 'Baloo Thambi 2', sans-serif; font-size: 13px; letter-spacing: 0.12em;
+  .confirm-block-title { font-family: 'Prompt', sans-serif; font-size: 13px; letter-spacing: 0.12em;
     color: var(--olive-deep); text-transform: uppercase; margin-bottom: 10px; }
   .confirm-row { display: flex; justify-content: space-between; font-size: 15px; margin-top: 6px; }
   .confirm-row span:first-child { color: var(--ink-soft); }
   .confirm-item-line { text-align: left; margin-top: 10px; }
   .confirm-item-top { display: flex; justify-content: space-between; font-size: 15.5px; font-weight: 500; }
-  .confirm-item-meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
-  .confirm-total-row { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace;
+  .confirm-item-meta { font-family: 'Prompt', sans-serif; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .confirm-total-row { display: flex; justify-content: space-between; font-family: 'Prompt', sans-serif;
     font-weight: 500; font-size: 18px; color: var(--olive-deep); margin-top: 14px; }
   .confirm-pay-badge { display: inline-block; margin-top: 8px; padding: 6px 14px; border-radius: 100px;
     background: var(--cream-deep); font-size: 14px; color: var(--ink); }
   .confirm-back-btn { width: 100%; margin-top: 32px; padding: 15px; border: none; border-radius: 100px;
-    background: var(--olive); color: var(--cream); font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600;
+    background: var(--olive); color: var(--cream); font-family: 'Prompt', sans-serif; font-weight: 600;
     font-size: 15.5px; cursor: pointer; }
 
   /* ---------- ใหม่ (28): WELCOME / SIGN-IN SCREEN ---------- */
@@ -324,8 +327,8 @@
     padding: 60px 26px 40px; display: flex; flex-direction: column; align-items: center; text-align: center; }
   .page-welcome.hidden-screen { display: none; }
   .welcome-logo { width: 108px; height: 108px; border-radius: 50%; object-fit: cover; box-shadow: 0 8px 20px rgba(75,86,56,0.22); }
-  .welcome-brand-name { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 26px; color: var(--olive-deep); margin-top: 18px; }
-  .welcome-title { font-family: 'Noto Sans Thai', sans-serif; font-weight: 500; font-size: 21px; color: var(--ink); margin-top: 26px; }
+  .welcome-brand-name { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 26px; color: var(--olive-deep); margin-top: 18px; }
+  .welcome-title { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 21px; color: var(--ink); margin-top: 26px; }
   .welcome-sub { font-size: 14.5px; color: var(--ink-soft); margin-top: 6px; }
   .welcome-form { width: 100%; margin-top: 26px; text-align: left; }
   .welcome-form .field-input { margin-top: 12px; }
@@ -338,28 +341,30 @@
     justify-content: center; color: var(--cream); font-size: 13px; }
   .welcome-consent-link { color: var(--olive-deep); text-decoration: underline; cursor: pointer; }
   .welcome-btn { width: 100%; margin-top: 8px; padding: 16px; border: none; border-radius: 100px; background: var(--olive);
-    color: var(--cream); font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer; }
+    color: var(--cream); font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer; }
   .welcome-btn.disabled { background: var(--disabled); cursor: not-allowed; }
   .welcome-terms-box { width: 100%; text-align: left; background: var(--cream-deep); border-radius: 14px; padding: 16px;
     margin-top: 10px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.7; }
 
   /* ---------- ใหม่ (28): BOTTOM NAV ---------- */
-  .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 430px; z-index: 6; background: var(--cream);
-    border-top: 1px solid var(--line); display: flex; padding: 6px 6px calc(env(safe-area-inset-bottom, 0px) + 6px); }
+  /* ใหม่: เปลี่ยนจากแถบเต็มขอบจอ (สี่เหลี่ยม) เป็นแคปซูล/วงรีลอยเหนือขอบจอ ตามตัวอย่างที่แคทส่งมา */
+  .bottom-nav { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+    transform: translateX(-50%); width: calc(100% - 32px); max-width: 398px; z-index: 6; background: var(--cream);
+    border-radius: 999px; box-shadow: 0 8px 24px rgba(59,59,50,0.18); display: flex; padding: 6px; }
   .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 7px 2px;
     background: none; border: none; cursor: pointer; color: var(--ink-soft); position: relative; min-height: 46px; }
   .nav-btn svg { width: 22px; height: 22px; }
-  .nav-btn-label { font-family: 'Noto Sans Thai', sans-serif; font-size: 11px; }
+  .nav-btn-label { font-family: 'Prompt', sans-serif; font-size: 11px; }
   .nav-btn.active { color: var(--olive-deep); }
   .nav-btn.active .nav-btn-label { display: none; }
   .nav-btn.active svg { display: block; width: 44px; height: 44px; padding: 11px; box-sizing: border-box;
     background: var(--olive); color: var(--cream); border-radius: 999px; }
   .nav-cart-badge { position: absolute; top: 2px; right: calc(50% - 20px); min-width: 16px; height: 16px; border-radius: 8px;
-    background: #C4573C; color: #fff; font-size: 10px; font-family: 'JetBrains Mono', monospace; display: flex;
+    background: #C4573C; color: #fff; font-size: 10px; font-family: 'Prompt', sans-serif; display: flex;
     align-items: center; justify-content: center; padding: 0 3px; }
 
   .hidden-screen { display: none !important; }
-  .page-list, .page-home, .page-profile { padding-bottom: 76px; }
+  .page-list, .page-home, .page-profile { padding-bottom: 96px; }
 
   /* ---------- ใหม่ (28): HOME TAB ---------- */
   .home-topbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 6px; gap: 12px; }
@@ -372,14 +377,14 @@
   .home-avatar-btn { flex: none; width: 42px; height: 42px; border-radius: 50%; background: var(--cream-deep);
     border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--olive-deep); overflow: hidden; }
   .home-brand-lockup { flex: none; text-align: center; line-height: 1.1; }
-  .home-brand-th { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 17px; color: var(--olive-deep); }
-  .home-brand-en { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 15px; color: var(--olive-deep); margin-top: -1px; }
+  .home-brand-th { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 17px; color: var(--olive-deep); }
+  .home-brand-en { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 15px; color: var(--olive-deep); margin-top: -1px; }
   .home-brand-sub { font-size: 10px; color: var(--ink-soft); letter-spacing: 0.08em; margin-top: 1px; }
   .home-search-wrap { padding: 10px 20px 4px; }
   .home-search { display: flex; align-items: center; gap: 10px; background: var(--cream-deep); border-radius: 100px;
     padding: 12px 18px; }
   .home-search svg { flex: none; width: 18px; height: 18px; color: var(--ink-soft); }
-  .home-search input { flex: 1; border: none; background: none; outline: none; font-family: 'Noto Sans Thai', sans-serif;
+  .home-search input { flex: 1; border: none; background: none; outline: none; font-family: 'Prompt', sans-serif;
     font-size: 14.5px; color: var(--ink); }
   .home-search input::placeholder { color: var(--ink-soft); }
   .quick-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 18px 18px 4px; }
@@ -403,7 +408,7 @@
     background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%); }
   .home-banner-slide.has-image > * { position: relative; z-index: 1; }
   .home-banner-kicker { font-size: 12px; opacity: 0.8; }
-  .home-banner-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 19px; margin-top: 4px; line-height: 1.35; }
+  .home-banner-title { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 19px; margin-top: 4px; line-height: 1.35; }
   .home-banner-sub { font-size: 12.5px; opacity: 0.85; margin-top: 6px; }
   .home-banner-cta { display: inline-block; margin-top: 14px; padding: 8px 16px; border-radius: 100px; background: var(--cream);
     color: var(--olive-deep); font-size: 13px; font-weight: 500; cursor: pointer; }
@@ -411,7 +416,7 @@
   .home-banner-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.4); }
   .home-banner-dot.active { background: var(--cream); }
   .home-section-title { display: flex; align-items: center; justify-content: space-between; margin: 24px 18px 12px; }
-  .home-section-title span:first-child { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 16px; color: var(--olive-deep); }
+  .home-section-title span:first-child { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 16px; color: var(--olive-deep); }
   .home-section-title span:last-child { font-size: 13px; color: var(--olive); cursor: pointer; }
   .reco-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 0 18px 8px; -webkit-overflow-scrolling: touch;
     scrollbar-width: none; -ms-overflow-style: none; } /* ใหม่: ซ่อนแถบเลื่อนเหมือนกัน ให้ดูเรียบเนียนทั้งแอพ */
@@ -421,19 +426,19 @@
   .reco-card .card-img-wrap { height: 92px; border-radius: 12px; }
   .reco-card .card-img-wrap svg { width: 46px; height: 58px; }
   .reco-card-name { font-size: 13.5px; font-weight: 500; margin-top: 8px; }
-  .reco-card-price { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--olive-deep); margin-top: 2px; }
+  .reco-card-price { font-family: 'Prompt', sans-serif; font-size: 12.5px; color: var(--olive-deep); margin-top: 2px; }
 
   /* ---------- ใหม่ (28): MENU TAB HEADER ---------- */
   .menu-header { padding: 20px 22px 6px; text-align: center; }
   .menu-top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
   .menu-brand-lockup { flex: 1; text-align: center; line-height: 1.1; }
-  .menu-brand-th { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 17px; color: var(--olive-deep); }
-  .menu-brand-en { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 15px; color: var(--olive-deep); margin-top: -1px; }
+  .menu-brand-th { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 17px; color: var(--olive-deep); }
+  .menu-brand-en { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 15px; color: var(--olive-deep); margin-top: -1px; }
   .menu-brand-sub { font-size: 10px; color: var(--ink-soft); letter-spacing: 0.08em; margin-top: 1px; }
   .menu-icon-btn { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--cream-deep); border: none;
     color: var(--ink); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .menu-icon-btn svg { width: 18px; height: 18px; }
-  .menu-header-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 22px; color: var(--olive-deep); letter-spacing: 0.04em; }
+  .menu-header-title { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 22px; color: var(--olive-deep); letter-spacing: 0.04em; }
   .menu-filter-chip { display: inline-flex; align-items: center; gap: 6px; margin: 22px 18px 0; padding: 8px 14px;
     border-radius: 100px; background: var(--cream-deep); font-size: 13px; color: var(--ink); }
   .menu-filter-chip span:last-child { cursor: pointer; color: var(--ink-soft); font-weight: 600; }
@@ -444,19 +449,27 @@
     align-items: center; justify-content: center; color: var(--olive-deep); flex: none; }
   .profile-avatar svg { width: 30px; height: 30px; }
   .profile-name-row { display: flex; align-items: center; gap: 10px; }
-  .profile-name { font-family: 'Noto Sans Thai', sans-serif; font-weight: 500; font-size: 19px; color: var(--ink); }
+  .profile-name { font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 19px; color: var(--ink); }
   .profile-since { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
   .profile-edit-btn { flex: none; font-size: 12px; color: var(--olive-deep); background: var(--cream-deep); border: none;
     border-radius: 100px; padding: 6px 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
   .profile-edit-btn svg { width: 13px; height: 13px; }
-  .profile-points-card { margin: 18px 22px 0; background: var(--olive); border-radius: 18px; padding: 18px 20px;
-    color: var(--cream); cursor: pointer; display: flex; align-items: center; gap: 14px; }
-  .profile-points-icon { flex: none; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.18);
-    display: flex; align-items: center; justify-content: center; }
+  .profile-points-card { margin: 18px 22px 0; background: var(--olive); border-radius: 18px; padding: 18px 20px; color: var(--cream); }
+  .profile-points-top { cursor: pointer; display: flex; align-items: center; gap: 14px; }
+  .profile-points-icon { flex: none; width: 42px; height: 42px; border-radius: 50%; background: var(--cream);
+    color: var(--olive-deep); display: flex; align-items: center; justify-content: center; }
   .profile-points-icon svg { width: 22px; height: 22px; }
-  .profile-points-label { font-size: 13px; opacity: 0.85; }
-  .profile-points-cta { margin-top: 6px; font-size: 13.5px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
-  .profile-section-title { font-family: 'Baloo Thambi 2', sans-serif; font-size: 12.5px; letter-spacing: 0.1em;
+  .profile-points-main { flex: 1; min-width: 0; }
+  .profile-points-label { font-size: 12.5px; opacity: 0.85; }
+  .profile-points-num { margin-top: 2px; font-size: 26px; font-weight: 600; line-height: 1.1; }
+  .profile-points-num span { font-size: 26px; }
+  .profile-points-rate { flex: none; font-size: 11px; opacity: 0.8; text-align: right; line-height: 1.5; }
+  .profile-points-redeem-btn { margin-top: 14px; width: 100%;
+    background: var(--cream); color: var(--olive-deep); border: none; border-radius: 100px; padding: 11px 16px;
+    font-family: 'Prompt', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; gap: 8px; }
+  .profile-points-redeem-btn svg { width: 17px; height: 17px; }
+  .profile-section-title { font-family: 'Prompt', sans-serif; font-size: 12.5px; letter-spacing: 0.1em;
     color: var(--ink-soft); text-transform: uppercase; margin: 26px 22px 8px; }
   .profile-row { display: flex; align-items: center; justify-content: space-between; padding: 15px 22px;
     border-bottom: 1px solid var(--line); cursor: pointer; }
@@ -467,11 +480,11 @@
   .profile-row-chevron { color: var(--ink-soft); }
 
   /* ---------- ใหม่ (28): ADDRESS / EDIT-INFO MODAL (ใช้ .overlay เดิมร่วมกัน) ---------- */
-  .modal-card-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 17px; text-align: center;
+  .modal-card-title { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 17px; text-align: center;
     color: var(--olive-deep); margin-bottom: 4px; }
   .modal-card-sub { text-align: center; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 14px; }
   .modal-save-btn { display: block; width: 100%; margin-top: 16px; padding: 13px; background: var(--olive); color: var(--cream);
-    border: none; border-radius: 100px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 14.5px; cursor: pointer; }
+    border: none; border-radius: 100px; font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 14.5px; cursor: pointer; }
   .modal-close-x { position: absolute; top: 14px; right: 14px; width: 28px; height: 28px; border-radius: 50%;
     background: rgba(59,59,50,0.08); border: none; color: var(--ink); font-size: 14.5px; cursor: pointer; }
 
@@ -481,28 +494,33 @@
   .pts-page-wrap { position: fixed; inset: 0; display: flex; justify-content: center; pointer-events: none; z-index: 52; }
   .pts-page { pointer-events: auto; width: 100%; max-width: 430px; height: 100vh; background: var(--cream-deep);
     transform: translateY(100%); transition: transform 0.28s cubic-bezier(.2,.7,.3,1);
-    display: flex; flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; }
+    display: flex; flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative;
+    scrollbar-width: none; -ms-overflow-style: none; }
+  .pts-page::-webkit-scrollbar { display: none; }
   .pts-page.show { transform: translateY(0); }
   .pts-page-body { flex: 1; padding-bottom: 84px; }
   .pts-close-btn { position: sticky; top: 14px; left: 14px; z-index: 5; }
 
   .pts-gate { min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px 60px; }
   .pts-gate-logo { font-size: 40px; margin-bottom: 10px; }
-  .pts-gate-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 20px; color: var(--olive-deep); margin-bottom: 4px; text-align: center; }
+  .pts-profile-edit-icon { width: 44px; height: 44px; border-radius: 13px; background: var(--olive); color: var(--cream);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+  .pts-profile-edit-icon svg { width: 23px; height: 23px; }
+  .pts-gate-title { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 20px; color: var(--olive-deep); margin-bottom: 4px; text-align: center; }
   .pts-gate-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 28px; text-align: center; }
   .pts-gate-card { width: 100%; background: var(--cream); border-radius: 18px; box-shadow: 0 2px 12px rgba(59,59,50,0.09); padding: 22px; }
   .pts-gate-label { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 6px; display: block; }
   .pts-gate-input { width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 17px;
-    font-family: 'JetBrains Mono', monospace; background: #fff; color: var(--ink); margin-bottom: 14px; }
+    font-family: 'Prompt', sans-serif; background: #fff; color: var(--ink); margin-bottom: 14px; }
   .pts-gate-input:focus { outline: none; border-color: var(--olive); }
   .pts-gate-btn { width: 100%; background: var(--olive); color: var(--cream); border: none; border-radius: 100px;
-    padding: 15px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 14.5px; cursor: pointer; }
+    padding: 15px; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 14.5px; cursor: pointer; }
   .pts-gate-error { background: #F6E4DC; color: #96432A; border-radius: 10px; padding: 11px 14px; font-size: 12.5px; margin-top: 14px; display: none; }
   .pts-gate-register-prompt { margin-top: 14px; font-size: 12.5px; color: var(--ink-soft); text-align: center; display: none; }
-  .pts-gate-link-btn { background: none; border: none; color: var(--olive); font-weight: 600; text-decoration: underline; cursor: pointer; font-size: 12.5px; padding: 0; font-family: 'Noto Sans Thai', sans-serif; }
+  .pts-gate-link-btn { background: none; border: none; color: var(--olive); font-weight: 600; text-decoration: underline; cursor: pointer; font-size: 12.5px; padding: 0; font-family: 'Prompt', sans-serif; }
   .pts-gate-back-btn { display: block; width: 100%; background: none; border: none; color: var(--ink-soft); font-size: 12.5px;
-    text-align: center; margin-top: 14px; cursor: pointer; text-decoration: underline; font-family: 'Noto Sans Thai', sans-serif; }
-  textarea.pts-gate-input { font-family: 'Noto Sans Thai', sans-serif; resize: vertical; min-height: 56px; }
+    text-align: center; margin-top: 14px; cursor: pointer; text-decoration: underline; font-family: 'Prompt', sans-serif; }
+  textarea.pts-gate-input { font-family: 'Prompt', sans-serif; resize: vertical; min-height: 56px; }
   .pts-menu-list-item { display: flex; align-items: center; gap: 12px; background: var(--cream); border-radius: 14px; padding: 16px 18px; cursor: pointer; box-shadow: 0 1px 4px rgba(59,59,50,0.06); }
   .pts-menu-list-icon { font-size: 18px; }
   .pts-menu-list-label { flex: 1; font-size: 14px; font-weight: 600; color: var(--ink); }
@@ -510,17 +528,19 @@
 
   .pts-header { background: var(--olive); color: var(--cream); padding: 16px 20px 22px; position: relative; }
   .pts-hdr-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-  .pts-hdr-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 15px; }
+  .pts-hdr-title { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 15px; }
   .pts-hdr-switch { background: rgba(250,248,242,0.16); border: none; color: var(--cream); font-size: 11.5px; border-radius: 100px; padding: 7px 13px; cursor: pointer; }
   .pts-balance-card { background: rgba(250,248,242,0.13); border-radius: 16px; padding: 18px 20px; }
   .pts-balance-name { font-size: 13px; opacity: 0.9; margin-bottom: 8px; }
-  .pts-balance-points { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 38px; line-height: 1; }
+  .pts-balance-points { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 38px; line-height: 1; }
   .pts-balance-points-label { font-size: 11.5px; opacity: 0.85; margin-top: 4px; }
   .pts-balance-total { font-size: 11.5px; opacity: 0.85; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(250,248,242,0.25); }
-  .pts-balance-total b { font-family: 'JetBrains Mono', monospace; }
+  .pts-balance-total b { font-family: 'Prompt', sans-serif; }
 
   .pts-main { padding: 18px 16px 4px; }
-  .pts-section-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; font-size: 14.5px; color: var(--olive-deep); margin: 4px 2px 12px; }
+  .pts-section-title { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 14.5px; color: var(--olive-deep); margin: 4px 2px 12px; }
+  .pts-section-title-row { display: flex; align-items: center; justify-content: space-between; margin: 4px 2px 12px; }
+  .pts-section-link { font-size: 12.5px; color: var(--olive); cursor: pointer; }
   .pts-empty-state { text-align: center; padding: 60px 20px; color: var(--ink-soft); }
   .pts-empty-state .emoji { font-size: 34px; margin-bottom: 8px; }
   .pts-empty-state .txt { font-size: 13px; }
@@ -538,8 +558,8 @@
   .pts-reward-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
   .pts-reward-name { font-size: 13px; font-weight: 500; line-height: 1.4; }
   .pts-reward-desc { font-size: 11px; color: var(--ink-soft); line-height: 1.5; flex: 1; }
-  .pts-reward-cost { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; color: var(--olive-deep); }
-  .pts-btn-redeem { border: none; border-radius: 100px; padding: 9px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 12px; cursor: pointer; background: var(--olive); color: var(--cream); margin-top: 2px; }
+  .pts-reward-cost { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 13px; color: var(--olive-deep); }
+  .pts-btn-redeem { border: none; border-radius: 100px; padding: 9px; font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 12px; cursor: pointer; background: var(--olive); color: var(--cream); margin-top: 2px; }
   .pts-btn-redeem:disabled { background: var(--disabled); color: var(--ink-soft); cursor: not-allowed; }
 
   .pts-redeem-card { background: var(--cream); border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 10px rgba(59,59,50,0.07); margin-bottom: 10px; }
@@ -548,14 +568,14 @@
   .pts-status-badge { font-size: 10.5px; padding: 3px 10px; border-radius: 100px; white-space: nowrap; }
   .pts-status-badge.active { background: rgba(75,122,78,0.14); color: #4B7A4E; }
   .pts-status-badge.used { background: var(--cream-deep); color: var(--ink-soft); }
-  .pts-redeem-code { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: var(--olive-deep); letter-spacing: 0.03em; margin: 6px 0; }
+  .pts-redeem-code { font-family: 'Prompt', sans-serif; font-size: 15px; font-weight: 700; color: var(--olive-deep); letter-spacing: 0.03em; margin: 6px 0; }
   .pts-redeem-meta { font-size: 11px; color: var(--ink-soft); }
 
   .pts-tx-row { background: var(--cream); border-radius: 14px; padding: 13px 16px; box-shadow: 0 2px 10px rgba(59,59,50,0.07); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .pts-tx-left .pts-tx-type { font-size: 13px; font-weight: 500; }
   .pts-tx-left .pts-tx-meta { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
   .pts-tx-right { text-align: right; }
-  .pts-tx-change { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; }
+  .pts-tx-change { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 14px; }
   .pts-tx-change.plus { color: #4B7A4E; }
   .pts-tx-change.minus { color: #C98A3A; }
   .pts-tx-balance { font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; }
@@ -564,16 +584,16 @@
     display: flex; padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -4px 14px rgba(59,59,50,0.08); z-index: 3; }
   .pts-tab-btn { flex: 1; background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 2px; cursor: pointer; color: var(--ink-soft); }
   .pts-tab-btn .icon { font-size: 19px; }
-  .pts-tab-btn .label { font-size: 10px; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 600; }
+  .pts-tab-btn .label { font-size: 10px; font-family: 'Prompt', sans-serif; font-weight: 600; }
   .pts-tab-btn.active { color: var(--olive-deep); }
 
   .pts-modal-box { width: 100%; max-width: 340px; background: var(--cream); border-radius: 18px; padding: 24px 22px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
   .pts-modal-emoji { font-size: 32px; margin-bottom: 10px; }
-  .pts-modal-title { font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+  .pts-modal-title { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 8px; }
   .pts-modal-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 18px; }
-  .pts-modal-code { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 30px; color: var(--olive-deep); background: var(--cream-deep); border-radius: 12px; padding: 16px; margin-bottom: 18px; letter-spacing: 0.04em; }
+  .pts-modal-code { font-family: 'Prompt', sans-serif; font-weight: 700; font-size: 30px; color: var(--olive-deep); background: var(--cream-deep); border-radius: 12px; padding: 16px; margin-bottom: 18px; letter-spacing: 0.04em; }
   .pts-modal-actions { display: flex; gap: 8px; }
-  .pts-modal-actions button { flex: 1; border-radius: 100px; border: none; padding: 13px; font-size: 13px; cursor: pointer; font-family: 'Baloo Thambi 2', sans-serif; font-weight: 700; }
+  .pts-modal-actions button { flex: 1; border-radius: 100px; border: none; padding: 13px; font-size: 13px; cursor: pointer; font-family: 'Prompt', sans-serif; font-weight: 700; }
   .pts-modal-actions .cancel { background: var(--cream-deep); color: var(--ink); }
   .pts-modal-actions .confirm { background: var(--olive); color: var(--cream); }
   .pts-modal-actions .ok { background: var(--olive); color: var(--cream); width: 100%; }
@@ -726,12 +746,19 @@
         <div class="profile-since" id="profileSinceText"></div>
       </div>
     </div>
-    <div class="profile-points-card" id="profilePointsCard" onclick="openPointsOverlay()">
-      <div class="profile-points-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1Z"/></svg></div>
-      <div>
-        <div class="profile-points-label">คะแนนสะสมของคุณ</div>
-        <div class="profile-points-cta">เปิดหน้าคะแนนสะสม / แลกของรางวัล ›</div>
+    <div class="profile-points-card" id="profilePointsCard">
+      <div class="profile-points-top" onclick="openPointsOverlay()">
+        <div class="profile-points-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1Z"/></svg></div>
+        <div class="profile-points-main">
+          <div class="profile-points-label">คะแนนสะสมของคุณ</div>
+          <div class="profile-points-num"><span id="profilePointsNum">0</span> คะแนน</div>
+        </div>
+        <div class="profile-points-rate">ทุก 10 บาท<br>= 1 แต้ม</div>
       </div>
+      <button class="profile-points-redeem-btn" onclick="openRewardsFromProfile(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8S14 3 16.5 3a2.5 2.5 0 0 1 0 5"/></svg>
+        <span>แลกของรางวัล</span>
+      </button>
     </div>
     <div class="profile-section-title">คำสั่งซื้อของฉัน</div>
     <div class="profile-status-cats">
@@ -818,8 +845,8 @@
       <button class="modal-close-x" onclick="closeAddressModal()">✕</button>
       <div class="modal-card-title">ที่อยู่ / จุดรับสินค้า</div>
       <div class="modal-card-sub">ใช้ข้อมูลชุดนี้ในการสั่งซื้อครั้งถัดไปโดยอัตโนมัติ</div>
+      <input class="field-input" id="addrNameInput" placeholder="ชื่อผู้รับ">
       <input class="field-input" id="addrLocInput" placeholder="สถานที่/ชั้น เช่น ออฟฟิศหัวหิ้ว ชั้น 3">
-      <input class="field-input" id="addrMapInput" placeholder="ลิงก์ Google Maps (ไม่บังคับ)">
       <input class="field-input" id="addrPhoneInput" placeholder="เบอร์โทรผู้รับ">
       <button class="modal-save-btn" onclick="saveAddressModal()">บันทึก</button>
     </div>
@@ -923,10 +950,18 @@
         </header>
         <main class="pts-main">
           <div id="ptsViewHome">
-            <div class="pts-section-title">เมนูลัด</div>
+            <div class="pts-section-title-row">
+              <div class="pts-section-title" style="margin:0;">ของรางวัล — แลกได้เลย</div>
+              <div class="pts-section-link" data-goto="rewards">ดูทั้งหมด ›</div>
+            </div>
+            <div id="ptsHomeRewardsEmptyState" class="pts-empty-state" style="display:none;padding:30px 20px;">
+              <div class="emoji">🎁</div>
+              <div class="txt">ยังไม่มีของรางวัลให้แลกตอนนี้ค่ะ</div>
+            </div>
+            <div class="pts-reward-grid" id="ptsHomeRewardsGrid" style="margin-bottom:18px;"></div>
             <div class="pts-quick-links">
-              <div class="pts-quick-link" data-goto="rewards"><div class="emoji">🎁</div><div class="label">ของรางวัล</div></div>
               <div class="pts-quick-link" data-goto="myRewards"><div class="emoji">🎟️</div><div class="label">รางวัลของฉัน</div></div>
+              <div class="pts-quick-link" data-goto="history"><div class="emoji">📜</div><div class="label">ประวัติแต้ม</div></div>
             </div>
             <div class="pts-home-hint">💡 สะสมแต้มได้ทุกครั้งที่สั่งซื้อออนไลน์หรือจ่ายที่เคาน์เตอร์แล้วแจ้งเบอร์สมาชิก (ทุก 10 บาท = 1 แต้ม) แล้วนำแต้มมาแลกของรางวัลได้ที่แท็บ "ของรางวัล"</div>
           </div>
@@ -972,7 +1007,7 @@
       </div>
 
       <div class="pts-gate" id="ptsProfileEditView" style="display:none;">
-        <div class="pts-gate-logo">👤</div>
+        <div class="pts-profile-edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.4-3.8 4.5-5.8 7.5-5.8s6.1 2 7.5 5.8"/></svg></div>
         <div class="pts-gate-title">ข้อมูลส่วนตัว</div>
         <div class="pts-gate-sub">แก้ไขข้อมูลของคุณ</div>
         <div class="pts-gate-card">
@@ -1081,7 +1116,7 @@ let SHOP_HOURS_INFO = { openTime: '07:00', closeTime: '17:00', enforced: true, i
 let cart = [];
 let current = null;
 let editingIndex = null;
-let checkoutState = { name: '', location: '', locationMapLink: '', phone: '', payment: null, slipUploaded: false, slipFileName: '', customerGroups: [], memberNumber: '', cashBill: null, cashOtherAmount: '' };
+let checkoutState = { name: '', location: '', phone: '', payment: null, slipUploaded: false, slipFileName: '', customerGroups: [], memberNumber: '', cashBill: null, cashOtherAmount: '' };
 
 const tabsEl = document.getElementById('tabs');
 const menuEl = document.getElementById('menu');
@@ -1106,14 +1141,12 @@ if (customerIdentity) {
   checkoutState.name = customerIdentity.name || '';
   checkoutState.phone = customerIdentity.phone || '';
   checkoutState.location = customerIdentity.location || '';
-  checkoutState.locationMapLink = customerIdentity.locationMapLink || '';
 }
 function persistIdentityFromCheckoutState() {
   customerIdentity = Object.assign({}, customerIdentity, {
     name: checkoutState.name,
     phone: checkoutState.phone,
     location: checkoutState.location,
-    locationMapLink: checkoutState.locationMapLink,
     consented: true,
     since: (customerIdentity && customerIdentity.since) || new Date().toISOString(),
   });
@@ -1370,12 +1403,33 @@ function renderProfile() {
       sinceEl.textContent = '';
     }
   }
+  refreshProfilePointsCard();
+}
+
+// ใหม่: โชว์แต้มสะสมจริงบนการ์ดหน้าโปรไฟล์เลย ไม่ต้องกดเข้าไปในหน้าคะแนนสะสมก่อนถึงจะเห็น
+// ถ้าเคยกรอกเบอร์ในหน้าคะแนนสะสม (หรือเคยล็อกอินในเซสชันนี้) อยู่แล้ว ดึงแต้มล่าสุดมาโชว์เงียบๆ ทันที
+function ptsUpdateProfileCard() {
+  const numEl = document.getElementById('profilePointsNum');
+  if (numEl) numEl.textContent = ptsState.phone ? ptsState.currentPoints : 0;
+}
+function refreshProfilePointsCard() {
+  ptsUpdateProfileCard();
+  const phone = ptsState.phone || ptsSavedPhone();
+  if (!phone) return;
+  ptsJsonp(MENU_API_URL + '?action=getMemberDashboard&phone=' + encodeURIComponent(phone), function (res) {
+    if (res && res.ok && res.found) ptsApplyDashboard(phone, res);
+  });
+}
+function openRewardsFromProfile(e) {
+  if (e) e.stopPropagation();
+  ptsActiveTab = 'rewards';
+  openPointsOverlay();
 }
 
 // ---- ป็อปอัพแก้ไขที่อยู่/จุดรับสินค้า (ใช้ร่วมกันทั้งหน้าแรกและหน้าโปรไฟล์) ----
 function openAddressModal() {
+  document.getElementById('addrNameInput').value = checkoutState.name || '';
   document.getElementById('addrLocInput').value = checkoutState.location || '';
-  document.getElementById('addrMapInput').value = checkoutState.locationMapLink || '';
   document.getElementById('addrPhoneInput').value = checkoutState.phone || '';
   document.getElementById('addressOverlay').classList.add('show');
 }
@@ -1383,8 +1437,8 @@ function closeAddressModal() {
   document.getElementById('addressOverlay').classList.remove('show');
 }
 function saveAddressModal() {
+  checkoutState.name = document.getElementById('addrNameInput').value.trim();
   checkoutState.location = document.getElementById('addrLocInput').value.trim();
-  checkoutState.locationMapLink = document.getElementById('addrMapInput').value.trim();
   checkoutState.phone = document.getElementById('addrPhoneInput').value.trim();
   persistIdentityFromCheckoutState();
   updateHomeLocValue();
@@ -1717,7 +1771,7 @@ function showMenuLoadError(err) {
   menuEl.innerHTML = `
     <div class="empty-note">
       โหลดเมนูไม่สำเร็จ ลองใหม่อีกครั้งค่ะ<br>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#a33;">${(err && err.message) || err}</span><br>
+      <span style="font-family:'Prompt',sans-serif;font-size:12px;color:#a33;">${(err && err.message) || err}</span><br>
       <button class="tab" style="margin-top:12px;" onclick="loadMenu()">ลองใหม่</button>
     </div>`;
 }
@@ -2276,14 +2330,6 @@ function renderCheckout() {
   locInput.oninput = (e) => { checkoutState.location = e.target.value; updateSubmitState(); };
   body.appendChild(locInput);
 
-  // ใหม่ (28): ช่องแนบลิงก์ Google Maps เสริม (ไม่บังคับ) คู่กับช่องพิมพ์ที่อยู่ด้านบน
-  const mapInput = document.createElement('input');
-  mapInput.className = 'field-input';
-  mapInput.placeholder = 'ลิงก์ Google Maps (ไม่บังคับ)';
-  mapInput.value = checkoutState.locationMapLink;
-  mapInput.oninput = (e) => { checkoutState.locationMapLink = e.target.value; };
-  body.appendChild(mapInput);
-
   const phoneInput = document.createElement('input');
   phoneInput.className = 'field-input';
   phoneInput.placeholder = 'เบอร์โทร';
@@ -2507,11 +2553,7 @@ function submitOrder() {
     submittedAt: new Date(),
     time: formatThaiDateTime(new Date()),
     name: checkoutState.name,
-    // ใหม่ (28): ถ้าลูกค้าแนบลิงก์ Google Maps มาด้วย ให้ต่อท้ายในช่อง "สถานที่/ชั้น" เดิมเลย
-    // (ยังไม่มีคอลัมน์แยกในชีต — ต่อท้ายแบบนี้พนักงานเห็นได้ทันทีโดยไม่ต้องแก้ฝั่งชีต/Apps Script ก่อน)
-    location: checkoutState.locationMapLink
-      ? checkoutState.location + ' (แผนที่: ' + checkoutState.locationMapLink + ')'
-      : checkoutState.location,
+    location: checkoutState.location,
     phone: checkoutState.phone,
     lineUserId: (customerIdentity && customerIdentity.lineUserId) || '', // ใหม่: ผูกออเดอร์กับ LINE ลูกค้า ใช้ส่งแจ้งเตือนสถานะกลับไปแชท
     payment: checkoutState.payment,
@@ -2580,7 +2622,6 @@ function submitOrder() {
     checkoutState = {
       name: (customerIdentity && customerIdentity.name) || '',
       location: (customerIdentity && customerIdentity.location) || '',
-      locationMapLink: (customerIdentity && customerIdentity.locationMapLink) || '',
       phone: (customerIdentity && customerIdentity.phone) || '',
       payment: null, slipUploaded: false, slipFileName: '',
       customerGroups: [], memberNumber: '', cashBill: null, cashOtherAmount: '',
@@ -3009,6 +3050,8 @@ function ptsApplyDashboard(phone, res) {
   ptsRenderRewards();
   ptsRenderMyRewards();
   ptsRenderHistory();
+  ptsUpdateProfileCard();
+  ptsRenderHomePreviewRewards();
 }
 
 function ptsShowApp() {
@@ -3235,6 +3278,23 @@ function ptsRenderRewards() {
   }
   empty.style.display = 'none';
   grid.innerHTML = ptsState.rewards.map(ptsRenderRewardCard).join('');
+  grid.querySelectorAll('.pts-btn-redeem[data-reward-id]').forEach((btn) => {
+    btn.addEventListener('click', () => ptsOpenConfirmModal(btn.getAttribute('data-reward-id')));
+  });
+}
+// ใหม่: ตัวอย่างของรางวัล 2 ชิ้นแรกบนหน้าแรกของคะแนนสะสม (แทนปุ่มลัด "เมนูลัด" เดิม) ใช้ข้อมูลของรางวัลจริงชุดเดียวกับแท็บ "ของรางวัล"
+function ptsRenderHomePreviewRewards() {
+  const grid = document.getElementById('ptsHomeRewardsGrid');
+  const empty = document.getElementById('ptsHomeRewardsEmptyState');
+  if (!grid || !empty) return;
+  const preview = ptsState.rewards.slice(0, 2);
+  if (preview.length === 0) {
+    empty.style.display = 'block';
+    grid.innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+  grid.innerHTML = preview.map(ptsRenderRewardCard).join('');
   grid.querySelectorAll('.pts-btn-redeem[data-reward-id]').forEach((btn) => {
     btn.addEventListener('click', () => ptsOpenConfirmModal(btn.getAttribute('data-reward-id')));
   });
