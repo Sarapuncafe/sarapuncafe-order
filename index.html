@@ -522,7 +522,9 @@
     text-align: center; margin-top: 14px; cursor: pointer; text-decoration: underline; font-family: 'Prompt', sans-serif; }
   textarea.pts-gate-input { font-family: 'Prompt', sans-serif; resize: vertical; min-height: 56px; }
   .pts-menu-list-item { display: flex; align-items: center; gap: 12px; background: var(--cream); border-radius: 14px; padding: 16px 18px; cursor: pointer; box-shadow: 0 1px 4px rgba(59,59,50,0.06); }
-  .pts-menu-list-icon { font-size: 18px; }
+  .pts-menu-list-icon { flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--olive); color: var(--cream);
+    display: flex; align-items: center; justify-content: center; }
+  .pts-menu-list-icon svg { width: 18px; height: 18px; }
   .pts-menu-list-label { flex: 1; font-size: 14px; font-weight: 600; color: var(--ink); }
   .pts-menu-list-chevron { color: var(--ink-soft); font-size: 18px; }
 
@@ -997,7 +999,7 @@
             <div class="pts-section-title">เมนู</div>
             <div class="pts-menu-list">
               <div class="pts-menu-list-item" id="ptsMenuProfileBtn">
-                <span class="pts-menu-list-icon">👤</span>
+                <span class="pts-menu-list-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c1.4-3.8 4.5-5.8 7.5-5.8s6.1 2 7.5 5.8"/></svg></span>
                 <span class="pts-menu-list-label">ข้อมูลส่วนตัว</span>
                 <span class="pts-menu-list-chevron">›</span>
               </div>
